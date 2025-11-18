@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('out_items', function (Blueprint $table) {
+            $table->integer('id_outItems')->primary()->autoIncrement();
+            $table->integer('id_items');
+            $table->integer('qyt');
+            $table->string('note')->nullable();
+            $table->string('customer')->nullable();
+            $table->date('date');
+            $table->timestamps();
+
+            $table->foreign('id_items')
+                ->references('id_items')
+                ->on('items')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('out_items');
+    }
+};
